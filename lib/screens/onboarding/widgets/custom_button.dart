@@ -1,4 +1,6 @@
+import 'package:dating_app/cubits/signup/signup_cubit.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class CustomButton extends StatelessWidget {
   final TabController tabController;
@@ -22,8 +24,11 @@ class CustomButton extends StatelessWidget {
       child: ElevatedButton(
         style:
             ElevatedButton.styleFrom(elevation: 0, primary: Colors.transparent),
-        onPressed: () {
+        onPressed: () async {
           tabController.animateTo(tabController.index + 1);
+          if (tabController.index == 2) {
+            BlocProvider.of<SignupCubit>(context).signupWithCredentials();
+          }
         },
         child: SizedBox(
           height: 40,

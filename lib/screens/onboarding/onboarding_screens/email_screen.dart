@@ -1,5 +1,6 @@
+import 'package:dating_app/cubits/signup/signup_cubit.dart';
 import 'package:flutter/material.dart';
-import 'package:step_progress_indicator/step_progress_indicator.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../widgets/widgets.dart';
 
@@ -9,24 +10,47 @@ class Email extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 50),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Column(
+    return BlocBuilder<SignupCubit, SignupState>(
+      builder: (context, state) {
+        final signupCubit = BlocProvider.of<SignupCubit>(context);
+
+        return Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 50),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              CustomTextHeader(
-                tabController: tabController,
-                text: 'What\'s Your Email Address?',
+              Column(
+                children: [
+                  CustomTextHeader(
+                    tabController: tabController,
+                    text: 'What\'s Your Email Address?',
+                  ),
+                  CustomTextField(
+                    text: 'ENTER YOUR EMAIL',
+                    onChanged: (value) {
+                      signupCubit.emailChanged(value);
+                      print(state.email);
+                    },
+                  ),
+                  const SizedBox(height: 100),
+                  CustomTextHeader(
+                    tabController: tabController,
+                    text: 'Choose a Password',
+                  ),
+                  CustomTextField(
+                    text: 'ENTER YOUR PASSWORD',
+                    onChanged: (value) => signupCubit.passwordChanged(value),
+                  ),
+                ],
               ),
-              CustomTextField(
-                  tabController: tabController, text: 'ENTER YOUR EMAIL')
+              StepAndNextButton(
+                tabController: tabController,
+                currentStep: 1,
+              ),
             ],
           ),
-          StepAndNextButton(tabController: tabController, currentStep: 1),
-        ],
-      ),
+        );
+      },
     );
   }
 }

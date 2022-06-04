@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 
 class CustomTextField extends StatelessWidget {
-  final TabController tabController;
+  final TextEditingController? controller;
   final String text;
+  final Function(String)? onChanged;
   const CustomTextField(
-      {Key? key, required this.tabController, required this.text})
+      {Key? key, required this.text, this.controller, this.onChanged})
       : super(key: key);
 
   @override
@@ -15,13 +16,14 @@ class CustomTextField extends StatelessWidget {
         fillColor: Colors.white,
         hintText: text,
         contentPadding: const EdgeInsets.only(bottom: 5, top: 12.5),
-        focusedBorder: OutlineInputBorder(
+        focusedBorder: const OutlineInputBorder(
           borderSide: BorderSide(color: Colors.white),
         ),
-        enabledBorder: UnderlineInputBorder(
+        enabledBorder: const UnderlineInputBorder(
           borderSide: BorderSide(color: Colors.white),
         ),
       ),
+      onChanged: onChanged,
     );
   }
 }

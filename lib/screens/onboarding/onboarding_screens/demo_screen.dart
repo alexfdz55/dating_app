@@ -9,6 +9,7 @@ class Demographipcs extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final ageTextCtrl = TextEditingController();
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 50),
       child: Column(
@@ -30,7 +31,7 @@ class Demographipcs extends StatelessWidget {
                 text: 'What\'s Your Age?',
               ),
               CustomTextField(
-                tabController: tabController,
+                controller: ageTextCtrl,
                 text: 'ENTER YOUR AGE',
               )
             ],

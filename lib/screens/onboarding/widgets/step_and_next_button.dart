@@ -6,9 +6,11 @@ import 'custom_button.dart';
 class StepAndNextButton extends StatelessWidget {
   final TabController tabController;
   final int currentStep;
-  const StepAndNextButton(
-      {Key? key, required this.tabController, required this.currentStep})
-      : super(key: key);
+  const StepAndNextButton({
+    Key? key,
+    required this.tabController,
+    required this.currentStep,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +24,10 @@ class StepAndNextButton extends StatelessWidget {
           unselectedColor: theme.backgroundColor,
         ),
         const SizedBox(height: 10),
-        CustomButton(tabController: tabController, text: 'NEXT STEP')
+        CustomButton(
+          tabController: tabController,
+          text: 'NEXT STEP',
+        )
       ],
     );
   }
