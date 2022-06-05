@@ -1,11 +1,12 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:equatable/equatable.dart';
 
 class User extends Equatable {
   final int id;
   final String name;
   final int age;
-  final List<String> imageUrls;
-  final List<String> interests;
+  final List<dynamic> imageUrls;
+  final List<dynamic> interests;
   final String bio;
   final String jobTitle;
 
@@ -22,6 +23,18 @@ class User extends Equatable {
   @override
   List<Object?> get props =>
       [id, name, age, imageUrls, interests, bio, jobTitle];
+
+  static User fromSnapshot(DocumentSnapshot snap) {
+    return User(
+      id: snap['id'],
+      name: snap['name'],
+      age: snap['age'],
+      imageUrls: snap['imageUrls'],
+      bio: snap['bio'],
+      jobTitle: snap['jobTitle'],
+      interests: snap['interests'],
+    );
+  }
 
   static List<User> users = [
     User(
