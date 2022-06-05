@@ -1,5 +1,5 @@
 import 'package:bloc/bloc.dart';
-import 'package:dating_app/repositories/auth_repository.dart';
+import 'package:dating_app/repositories/auth/auth_repository.dart';
 import 'package:equatable/equatable.dart';
 
 part 'signup_state.dart';

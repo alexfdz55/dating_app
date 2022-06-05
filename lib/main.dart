@@ -1,6 +1,6 @@
 import 'package:dating_app/blocs/auth/auth_bloc.dart';
 import 'package:dating_app/blocs/swipe/swipe_bloc.dart';
-import 'package:dating_app/repositories/auth_repository.dart';
+import 'package:dating_app/repositories/auth/auth_repository.dart';
 import 'package:dating_app/screens/screens.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -8,7 +8,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'config/app_router.dart';
 import 'config/theme.dart';
-import 'cubits/signup/signup_cubit.dart';
 import 'models/models.dart';
 
 void main() async {

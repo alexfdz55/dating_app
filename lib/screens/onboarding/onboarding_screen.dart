@@ -1,5 +1,5 @@
 import 'package:dating_app/cubits/signup/signup_cubit.dart';
-import 'package:dating_app/repositories/auth_repository.dart';
+import 'package:dating_app/repositories/auth/auth_repository.dart';
 import 'package:dating_app/screens/onboarding/onboarding_screens/email_verification_screen.dart';
 import 'package:dating_app/widgets/widgets.dart';
 import 'package:flutter/material.dart';
