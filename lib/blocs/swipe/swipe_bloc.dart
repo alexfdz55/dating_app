@@ -6,24 +6,28 @@ part 'swipe_event.dart';
 part 'swipe_state.dart';
 
 class SwipeBloc extends Bloc<SwipeEvent, SwipeState> {
-  SwipeBloc() : super(SwipeLoadingState()) {
-    on<LoadUsersEvent>((event, emit) {
-      emit(SwipeLoadedState(users: event.users));
+  SwipeBloc() : super(SwipeLoading()) {
+    on<LoadUsers>((event, emit) {
+      emit(SwipeLoaded(users: event.users));
     });
 
-    on<SwipeLeftEvent>((event, emit) {
-      if (state is SwipeLoadedState) {
-        final currentState = state as SwipeLoadedState;
-        emit(SwipeLoadedState(
-            users: List.from(currentState.users)..remove(event.user)));
+    on<SwipeLeft>((event, emit) {
+      if (state is SwipeLoaded) {
+        final currentState = state as SwipeLoaded;
+        try {
+          emit(SwipeLoaded(
+              users: List.from(currentState.users)..remove(event.user)));
+        } catch (_) {}
       }
     });
 
-    on<SwipeRightEvent>((event, emit) {
-      if (state is SwipeLoadedState) {
-        final currentState = state as SwipeLoadedState;
-        emit(SwipeLoadedState(
-            users: List.from(currentState.users)..remove(event.user)));
+    on<SwipeRight>((event, emit) {
+      if (state is SwipeLoaded) {
+        final currentState = state as SwipeLoaded;
+        try {
+          emit(SwipeLoaded(
+              users: List.from(currentState.users)..remove(event.user)));
+        } catch (_) {}
       }
     });
   }

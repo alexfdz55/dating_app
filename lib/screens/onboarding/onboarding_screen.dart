@@ -1,5 +1,8 @@
+import 'package:dating_app/blocs/blocs.dart';
 import 'package:dating_app/cubits/signup/signup_cubit.dart';
 import 'package:dating_app/repositories/auth/auth_repository.dart';
+import 'package:dating_app/repositories/database/database_repository.dart';
+import 'package:dating_app/repositories/storage/storage_repository.dart';
 import 'package:dating_app/screens/onboarding/onboarding_screens/email_verification_screen.dart';
 import 'package:dating_app/widgets/widgets.dart';
 import 'package:flutter/material.dart';
@@ -15,10 +18,22 @@ class OnboardingScreen extends StatelessWidget {
   static Route route() {
     return MaterialPageRoute(
       settings: RouteSettings(name: routeName),
-      builder: (context) => BlocProvider(
-        create: (context) => SignupCubit(
-          authRepository: RepositoryProvider.of<AuthRepository>(context),
-        ),
+      builder: (context) => MultiBlocProvider(
+        providers: [
+          BlocProvider<SignupCubit>(
+            create: (_) => SignupCubit(
+              authRepository: RepositoryProvider.of<AuthRepository>(context),
+            ),
+          ),
+          BlocProvider<OnboardingBloc>(
+            create: (_) => OnboardingBloc(
+              databaseRepository:
+                  RepositoryProvider.of<DatabaseRepository>(context),
+              storageRepository:
+                  RepositoryProvider.of<StorageRepository>(context),
+            )..add(StartOnboarding()),
+          ),
+        ],
         child: OnboardingScreen(),
       ),
     );
@@ -31,6 +46,7 @@ class OnboardingScreen extends StatelessWidget {
     Tab(text: 'Demographics'),
     Tab(text: 'Pictures'),
     Tab(text: 'Biography'),
+    Tab(text: 'Location')
   ];
 
   @override
@@ -53,6 +69,7 @@ class OnboardingScreen extends StatelessWidget {
               Demographipcs(tabController: tabController),
               Pictures(tabController: tabController),
               Biography(tabController: tabController),
+              Location(tabController: tabController),
             ]),
           );
         },

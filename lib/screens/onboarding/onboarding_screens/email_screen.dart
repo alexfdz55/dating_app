@@ -21,10 +21,7 @@ class Email extends StatelessWidget {
             children: [
               Column(
                 children: [
-                  CustomTextHeader(
-                    tabController: tabController,
-                    text: 'What\'s Your Email Address?',
-                  ),
+                  CustomTextHeader(text: 'What\'s Your Email Address?'),
                   CustomTextField(
                     text: 'ENTER YOUR EMAIL',
                     onChanged: (value) {
@@ -33,10 +30,7 @@ class Email extends StatelessWidget {
                     },
                   ),
                   const SizedBox(height: 100),
-                  CustomTextHeader(
-                    tabController: tabController,
-                    text: 'Choose a Password',
-                  ),
+                  CustomTextHeader(text: 'Choose a Password'),
                   CustomTextField(
                     text: 'ENTER YOUR PASSWORD',
                     onChanged: (value) => signupCubit.passwordChanged(value),

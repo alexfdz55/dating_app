@@ -27,13 +27,13 @@ class HomeScreen extends StatelessWidget {
         builder: (context, state) {
           final swipeBloc = BlocProvider.of<SwipeBloc>(context);
 
-          if (state is SwipeLoadingState) {
+          if (state is SwipeLoading) {
             return const Center(
               child: CircularProgressIndicator(),
             );
           }
 
-          if (state is SwipeLoadedState) {
+          if (state is SwipeLoaded) {
             return Column(
               children: [
                 InkWell(
@@ -49,9 +49,9 @@ class HomeScreen extends StatelessWidget {
                     childWhenDragging: UserCard(user: state.users[1]),
                     onDragEnd: (drag) {
                       if (drag.velocity.pixelsPerSecond.dx < 0) {
-                        swipeBloc.add(SwipeLeftEvent(user: state.users[0]));
+                        swipeBloc.add(SwipeLeft(user: state.users[0]));
                       } else {
-                        swipeBloc.add(SwipeLeftEvent(user: state.users[0]));
+                        swipeBloc.add(SwipeLeft(user: state.users[0]));
                       }
                     },
                     child: UserCard(user: state.users[0]),
@@ -67,7 +67,7 @@ class HomeScreen extends StatelessWidget {
                         color: theme.accentColor,
                         icon: Icons.clear_rounded,
                         onTap: () =>
-                            swipeBloc.add(SwipeLeftEvent(user: state.users[0])),
+                            swipeBloc.add(SwipeLeft(user: state.users[0])),
                       ),
                       ChoiceButton(
                         height: 80,
@@ -76,8 +76,8 @@ class HomeScreen extends StatelessWidget {
                         color: Colors.white,
                         hasGradient: true,
                         icon: Icons.favorite,
-                        onTap: () => swipeBloc
-                            .add(SwipeRightEvent(user: state.users[0])),
+                        onTap: () =>
+                            swipeBloc.add(SwipeRight(user: state.users[0])),
                       ),
                       ChoiceButton(
                         color: theme.primaryColor,
@@ -90,7 +90,7 @@ class HomeScreen extends StatelessWidget {
               ],
             );
           }
-          if (state is SwipeErrorState) {
+          if (state is SwipeError) {
             return const Text('Something went wrong');
           }
           return Container();
