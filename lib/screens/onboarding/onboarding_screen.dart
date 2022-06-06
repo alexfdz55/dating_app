@@ -6,7 +6,6 @@ import 'package:dating_app/repositories/storage/storage_repository.dart';
 import 'package:dating_app/screens/onboarding/onboarding_screens/email_verification_screen.dart';
 import 'package:dating_app/widgets/widgets.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'onboarding_screens/screens.dart';
 
@@ -18,26 +17,33 @@ class OnboardingScreen extends StatelessWidget {
   static Route route() {
     return MaterialPageRoute(
       settings: RouteSettings(name: routeName),
-      builder: (context) => MultiBlocProvider(
-        providers: [
-          BlocProvider<SignupCubit>(
-            create: (_) => SignupCubit(
-              authRepository: RepositoryProvider.of<AuthRepository>(context),
-            ),
-          ),
-          BlocProvider<OnboardingBloc>(
-            create: (_) => OnboardingBloc(
-              databaseRepository:
-                  RepositoryProvider.of<DatabaseRepository>(context),
-              storageRepository:
-                  RepositoryProvider.of<StorageRepository>(context),
-            )..add(StartOnboarding()),
-          ),
-        ],
-        child: OnboardingScreen(),
-      ),
+      builder: (context) => OnboardingScreen(),
     );
   }
+
+  // static Route route() {
+  //   return MaterialPageRoute(
+  //     settings: RouteSettings(name: routeName),
+  //     builder: (context) => MultiBlocProvider(
+  //       providers: [
+  //         BlocProvider<SignupCubit>(
+  //           create: (_) => SignupCubit(
+  //             authRepository: RepositoryProvider.of<AuthRepository>(context),
+  //           ),
+  //         ),
+  //         BlocProvider<OnboardingBloc>(
+  //           create: (_) => OnboardingBloc(
+  //             databaseRepository:
+  //                 RepositoryProvider.of<DatabaseRepository>(context),
+  //             storageRepository:
+  //                 RepositoryProvider.of<StorageRepository>(context),
+  //           )..add(StartOnboarding()),
+  //         ),
+  //       ],
+  //       child: OnboardingScreen(),
+  //     ),
+  //   );
+  // }
 
   static const List<Tab> tabs = <Tab>[
     Tab(text: 'Start'),
@@ -56,12 +62,9 @@ class OnboardingScreen extends StatelessWidget {
       child: Builder(
         builder: (context) {
           final TabController tabController = DefaultTabController.of(context)!;
-          tabController.addListener(() {
-            if (!tabController.indexIsChanging) {}
-          });
 
           return Scaffold(
-            appBar: CustomAppbar(hasAction: false, title: 'ARROW'),
+            appBar: const CustomAppbar(hasAction: false, title: 'ARROW'),
             body: TabBarView(children: [
               Start(tabController: tabController),
               Email(tabController: tabController),

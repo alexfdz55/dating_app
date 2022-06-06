@@ -1,4 +1,6 @@
+import 'package:dating_app/blocs/onboarding/onboarding_bloc.dart';
 import 'package:dating_app/cubits/signup/signup_cubit.dart';
+import 'package:dating_app/models/models.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -13,6 +15,9 @@ class CustomButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final signupCubit = BlocProvider.of<SignupCubit>(context);
+
+    final onboardingBloc = BlocProvider.of<OnboardingBloc>(context);
     final theme = Theme.of(context);
     return DecoratedBox(
       decoration: BoxDecoration(
@@ -25,9 +30,27 @@ class CustomButton extends StatelessWidget {
         style:
             ElevatedButton.styleFrom(elevation: 0, primary: Colors.transparent),
         onPressed: () async {
-          tabController.animateTo(tabController.index + 1);
+          if (tabController.index == 5) {
+            Navigator.pushNamed(context, '/');
+          } else {
+            tabController.animateTo(tabController.index + 1);
+          }
+
           if (tabController.index == 2) {
-            BlocProvider.of<SignupCubit>(context).signupWithCredentials();
+            await signupCubit.signUpWithCredentials();
+            User user = User(
+              // ignore: use_build_context_synchronously
+              id: signupCubit.state.user!.uid,
+              name: '',
+              age: 0,
+              gender: '',
+              imageUrls: [],
+              jobTitle: '',
+              interests: [],
+              bio: '',
+              location: '',
+            );
+            onboardingBloc.add(StartOnboarding(user: user));
           }
         },
         child: SizedBox(

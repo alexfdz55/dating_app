@@ -4,9 +4,9 @@ import 'package:flutter/material.dart';
 
 class AppRouter {
   static Route onGenerateRoute(RouteSettings settings) {
-    print('The Route is: ${settings.name}');
+    // print('The Route is: ${settings.name}');
 
-    print(settings);
+    // print(settings);
     switch (settings.name) {
       case '/':
         return HomeScreen.route();
