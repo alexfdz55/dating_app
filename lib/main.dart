@@ -41,7 +41,11 @@ class MyApp extends StatelessWidget {
             ),
           ),
           BlocProvider(
-            create: (context) => SwipeBloc()..add(LoadUsers(users: User.users)),
+            create: (context) => SwipeBloc(
+              authBloc: BlocProvider.of<AuthBloc>(context),
+              databaseRepository:
+                  RepositoryProvider.of<DatabaseRepository>(context),
+            ),
           ),
           BlocProvider(
             create: (context) => ProfileBloc(

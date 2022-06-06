@@ -1,4 +1,5 @@
 import 'package:dating_app/models/user_model.dart';
+import 'package:dating_app/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 
 import 'user_image_small.dart';
@@ -22,22 +23,25 @@ class UserCard extends StatelessWidget {
           width: size.width,
           child: Stack(
             children: [
-              Container(
-                decoration: BoxDecoration(
-                    image: DecorationImage(
-                      fit: BoxFit.cover,
-                      image: NetworkImage(user.imageUrls[0]),
-                    ),
-                    borderRadius: BorderRadius.circular(5.0),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.grey.withOpacity(0.5),
-                        spreadRadius: 4,
-                        blurRadius: 4,
-                        offset: const Offset(3, 3),
-                      )
-                    ]),
+              UserImage.large(
+                url: user.imageUrls[0],
               ),
+              // Container(
+              //   decoration: BoxDecoration(
+              //       image: DecorationImage(
+              //         fit: BoxFit.cover,
+              //         image: NetworkImage(user.imageUrls[0]),
+              //       ),
+              //       borderRadius: BorderRadius.circular(5.0),
+              //       boxShadow: [
+              //         BoxShadow(
+              //           color: Colors.grey.withOpacity(0.5),
+              //           spreadRadius: 4,
+              //           blurRadius: 4,
+              //           offset: const Offset(3, 3),
+              //         )
+              //       ]),
+              // ),
               Container(
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(5.0),
@@ -68,28 +72,36 @@ class UserCard extends StatelessWidget {
                         fontWeight: FontWeight.normal,
                       ),
                     ),
-                    Row(
-                      children: [
-                        UserImageSmall(imageUrl: user.imageUrls[1]),
-                        UserImageSmall(imageUrl: user.imageUrls[2]),
-                        UserImageSmall(imageUrl: user.imageUrls[3]),
-                        UserImageSmall(imageUrl: user.imageUrls[4]),
-                        const SizedBox(width: 10),
-                        Container(
-                          width: 35,
-                          height: 35,
-                          decoration: const BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: Colors.white,
-                          ),
-                          child: Icon(
-                            Icons.info_outline,
-                            size: 25,
-                            color: theme.primaryColor,
-                          ),
-                        )
-                      ],
-                    )
+                    SizedBox(
+                      height: 70,
+                      child: ListView.builder(
+                        shrinkWrap: true,
+                        scrollDirection: Axis.horizontal,
+                        physics: const NeverScrollableScrollPhysics(),
+                        itemCount: user.imageUrls.length + 1,
+                        itemBuilder: (_, index) {
+                          return (index < user.imageUrls.length)
+                              ? UserImage.small(
+                                  url: user.imageUrls[index],
+                                  margin:
+                                      const EdgeInsets.only(top: 8, right: 8),
+                                )
+                              : Container(
+                                  width: 35,
+                                  height: 35,
+                                  decoration: const BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    color: Colors.white,
+                                  ),
+                                  child: Icon(
+                                    Icons.info_outline,
+                                    size: 25,
+                                    color: theme.primaryColor,
+                                  ),
+                                );
+                        },
+                      ),
+                    ),
                   ],
                 ),
               ),
